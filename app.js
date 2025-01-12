@@ -8,7 +8,7 @@ const { title } = require("process");
 
 app.set("view engine","ejs");
 app.set("layout", "layouts/boilerplate"); 
-app.use(express.static(path.join(__dirname,"/view")));
+app.use(express.static(path.join(__dirname,"/views")));
 app.use(express.static(path.join(__dirname,"/public")));
 app.use(express.urlencoded({extended:true}));
 app.use(expressLayouts);
@@ -26,16 +26,24 @@ main()
     console.log(err);
 })
 
-app.get("/quickDocs/home",(req,res)=>{
+app.get("/quickDocs",(req,res)=>{
     res.render("pages/home.ejs",{title:"home",stylesheet:"home.css"});
 })
 
-app.get("/quickDocs/login",(req,res)=>{
-    res.render("pages/login.ejs",{title:"login",stylesheet:"login.css"});
+app.get("/quickDocs/onboardingA",(req,res)=>{
+    res.render("pages/onboardingA.ejs",{title:"onboardingA",stylesheet:"onboardingA.css"});
 })
 
-app.get("/quickDocs/onboardingA",(req,res)=>{
-    res.render("/pages/onboardingA.ejs",{title:"onboardingA",stylesheet:"onboarding.css"});
+app.get("/quickDocs/onboardingB",(req,res)=>{
+    res.render("pages/onboardingB.ejs",{title:"onboardingB",stylesheet:"onboardingB.css"});
+})
+
+app.get("/quickDocs/onboardingC",(req,res)=>{
+    res.render("pages/onboardingC.ejs",{title:"onboardingc",stylesheet:"onboardingC.css"});
+});
+
+app.get("/quickDocs/login",(req,res)=>{
+    res.render("pages/login.ejs",{title:"login",stylesheet:"login.css"});
 })
 
 app.get("/",(req,res)=>{
