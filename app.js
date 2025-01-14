@@ -54,6 +54,14 @@ app.get("/quickDocs/employeeLogin",(req,res)=>{
     res.render("pages/employeeLogin.ejs",{title:"employeeLogin",stylesheet:"employeeLogin.css"});
 })
 
+app.get("/quickDocs/verification",(req,res)=>{
+    res.render("pages/verification.ejs",{title:"verification",stylesheet:"verification.css"});
+})
+
+app.get("/quickDocs/verificationComplete",(req,res)=>{
+    res.render("pages/verificationComplete.ejs",{title:"complete",stylesheet:"verificationComplete.css"});
+})
+
 app.get("/",(req,res)=>{
     res.send("root working");
 })
