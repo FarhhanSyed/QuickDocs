@@ -50,6 +50,10 @@ app.get("/quickDocs/upload",(req,res)=>{
     res.render("pages/upload.ejs",{title:"upload",stylesheet:"upload.css"});
 })
 
+app.get("/quickDocs/employeeLogin",(req,res)=>{
+    res.render("pages/employeeLogin.ejs",{title:"employeeLogin",stylesheet:"employeeLogin.css"});
+})
+
 app.get("/",(req,res)=>{
     res.send("root working");
 })

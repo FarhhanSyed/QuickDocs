@@ -1,0 +1,106 @@
+* {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+body {
+    height: 100vh;
+    background-color: #1e1e1e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+    font-family: 'Sansation', sans-serif;
+}
+
+.container {
+    background-color: #47494c;
+    height: 96%;
+    max-height: 812px;
+    width: 100%;
+    max-width: 355px;
+    border-radius: 26px;
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    padding: 20px;
+}
+
+h1{
+    text-align: center;
+    margin: 30px auto;    
+    display: inline-block;
+    font-weight: 900;
+    border-bottom: 4px solid #E79C7F;
+}
+p{
+    text-align: center;
+    margin-top:-17px;
+    font-size: 17px;
+    line-height:22px;
+}
+
+.credentials{
+    margin-top:38px;
+}
+.inputs{
+    margin-top:23px;
+}
+.credentials .inputs label{
+    font-size:14px;
+    margin-left:3px;
+}
+.inputs input{
+    width:100%;
+    padding:12px 10px;
+    border:none;
+    border-radius:10px;
+    background-color: #F3F7FB;
+    margin:5px 0 4px 0;
+}
+a{
+    text-decoration:none;
+    color:#E91E1E;
+    font-size:13px;
+    margin-left:204px;
+}
+.credentials button{
+    width:100%;
+    margin-top:30px;
+    padding:12px 40px;
+    border-radius: 10px;
+    border:none;
+    font-size:14px;
+    font-weight: 500;
+    cursor:pointer;
+}
+
+#or{
+    margin-top:49px;
+    font-size:15px;
+}
+.btns{
+    display: flex;
+    justify-content: space-around;
+    margin-top:15px;
+}
+.btns button{
+    background-color: #F3F9FA;
+    border:none;
+    padding:8px 30px;
+    cursor:pointer;
+    border-radius:10px;
+    font-size:14px;
+    font-weight: 500;
+    cursor:pointer;
+}
+.fa-brands{
+    margin-right:10px;
+    font-size:19px;
+}
+#signup{
+    margin-top:14px;
+    font-size: 14px;
+}
