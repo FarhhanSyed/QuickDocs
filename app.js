@@ -46,6 +46,10 @@ app.get("/quickDocs/login",(req,res)=>{
     res.render("pages/login.ejs",{title:"login",stylesheet:"login.css"});
 })
 
+app.get("/quickDocs/upload",(req,res)=>{
+    res.render("pages/upload.ejs",{title:"upload",stylesheet:"upload.css"});
+})
+
 app.get("/",(req,res)=>{
     res.send("root working");
 })
