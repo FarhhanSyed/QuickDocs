@@ -5,8 +5,9 @@ const userSchema = new Schema(
   {
     name: { type: String, required: true },
     email: { type: String, required: true, unique: true },
-    password: { type: String, required: true }, // Encrypted password
-    documents: [{ type: mongoose.Types.ObjectId, ref: "Document" }], // List of documents owned by the user
+    otp: { type: String },
+    otpExpiry: { type: Date },
+    profileImage: { type: String }, // Stores the path to the uploaded image
   },
   { timestamps: true }
 );
