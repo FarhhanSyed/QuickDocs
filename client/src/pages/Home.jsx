@@ -5,6 +5,7 @@ import { FaUserCircle, FaUpload, FaShareSquare } from "react-icons/fa";
 import { getDocuments } from "../redux/slices/document";
 import Spinner from "../components/Spinner";
 import Document from "../components/Document";
+import { Link } from "react-router-dom";
 
 function Home() {
   const { user, logout } = useContext(AuthContext);
@@ -59,14 +60,20 @@ function Home() {
         )}
       </div>
       <div className="bg-blue-600 text-white p-4 flex justify-around fixed bottom-0 w-full">
-        <div className="cursor-pointer flex flex-col items-center">
+        <Link
+          to="/upload-document"
+          className="cursor-pointer flex flex-col items-center"
+        >
           <FaUpload size={24} />
           <p className="m-0">Upload</p>
-        </div>
-        <div className="cursor-pointer flex flex-col items-center">
+        </Link>
+        <Link
+          to="/share-document"
+          className="cursor-pointer flex flex-col items-center"
+        >
           <FaShareSquare size={24} />
           <p className="m-0">Share</p>
-        </div>
+        </Link>
       </div>
     </div>
   );

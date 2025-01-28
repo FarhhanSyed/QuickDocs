@@ -34,13 +34,18 @@ exports.createDocument = [
         return res.status(400).json({ message: "No file uploaded" });
       }
 
+      const parsedMetadata =
+        typeof metadata === "string" ? JSON.parse(metadata) : metadata;
+
       // Create the document with the path to the uploaded file
       const document = await Document.create({
         user: userId,
         name,
-        metadata,
+        metadata: parsedMetadata,
         path: req.file.path, // Store the file path (relative to the root)
       });
+
+      await document.save();
 
       res.status(201).json({
         message: "Document created successfully",

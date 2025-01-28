@@ -11,6 +11,8 @@ import PrivateRoute from "./components/PrivateRoute";
 import PublicRoute from "./components/PublicRoute";
 import ForgotPassword from "./pages/ForgotPassword.jsx";
 import NotFound from "./components/NotFound.jsx";
+import UploadDocument from "./pages/UploadDocument";
+import ShareDocument from "./pages/ShareDocument";
 
 function App() {
   const { loading } = useContext(AuthContext);
@@ -36,6 +38,14 @@ function App() {
 
         {/* Protected Route */}
         <Route path="/" element={<PrivateRoute element={<Home />} />} />
+        <Route
+          path="/upload-document"
+          element={<PrivateRoute element={<UploadDocument />} />}
+        />
+        <Route
+          path="/share-document"
+          element={<PrivateRoute element={<ShareDocument />} />}
+        />
         {/* 404 Not Found Route */}
         <Route path="*" element={<NotFound />} />
       </Routes>
