@@ -8,6 +8,8 @@ const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const documentRoutes = require("./routes/document");
 const cookieParser = require("cookie-parser");
+const authenticateUser = require("./middlewares/auth");
+const path = require("path");
 dotenv.config();
 
 const app = express();
@@ -59,6 +61,20 @@ app.get("/api/hello", (req, res) => {
 app.use("/api/v1/auth", authRoutes);
 app.use("/api/v1/user", userRoutes);
 app.use("/api/v1/documents", documentRoutes);
+
+// Serve profiles statically
+app.use(
+  "/api/v1/data/profiles",
+  authenticateUser,
+  express.static(path.join(__dirname, "data/profiles"))
+);
+// Serve docs statically
+app.use(
+  "/api/v1/data/files",
+  authenticateUser,
+  express.static(path.join(__dirname, "data/files"))
+);
+
 // Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => {

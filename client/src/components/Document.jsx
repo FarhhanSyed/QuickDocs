@@ -1,26 +1,64 @@
+import { useState } from "react";
+import { FaFilePdf } from "react-icons/fa";
+
 const Document = ({ doc }) => {
-  return (
-    <div className="document p-4 bg-white shadow-md rounded-md">
-      <h2 className="text-2xl font-bold mb-2">{doc.name}</h2>
-      <p className="mb-1">
-        <strong>User ID:</strong> {doc.user}
-      </p>
-      <p className="mb-1">
-        <strong>File Path:</strong> {doc.path}
-      </p>
-      <p className="mb-4">
-        <strong>Created At:</strong> {new Date(doc.createdAt).toLocaleString()}
-      </p>
-      <div>
-        <h3 className="text-xl font-semibold mb-2">Metadata</h3>
-        <ul className="list-disc list-inside">
-          {Object.entries(doc.metadata).map(([key, value]) => (
-            <li key={key}>
-              <strong>{key}:</strong> {value}
-            </li>
-          ))}
-        </ul>
+  const [isMetadataVisible, setIsMetadataVisible] = useState(true);
+
+  if (!doc) {
+    return (
+      <div className="w-full p-4 bg-white shadow-md rounded-lg">
+        <h2 className="text-2xl font-bold">Invalid Document</h2>
+        <p className="text-gray-500">Please provide a valid document object.</p>
       </div>
+    );
+  }
+
+  const { name, path, createdAt, metadata } = doc;
+
+  return (
+    <div className="w-full p-4 bg-white shadow-md rounded-lg relative">
+      <div className="flex justify-between items-center mb-6">
+        <div className="flex items-center space-x-4">
+          <FaFilePdf className="text-red-500" size={24} />
+          <div>
+            <h2 className="text-2xl font-bold">{name}</h2>
+            <p className="text-gray-600">
+              {new Date(createdAt).toLocaleString()}
+            </p>
+          </div>
+        </div>
+        <div className="text-right">
+          <h3 className="text-lg font-semibold">Metadata</h3>
+          <button
+            onClick={() => setIsMetadataVisible(!isMetadataVisible)}
+            className="text-blue-500 hover:text-blue-600"
+          >
+            {isMetadataVisible ? "Hide Metadata" : "Show Metadata"}
+          </button>
+          {isMetadataVisible && (
+            <div className="mt-2 space-y-1">
+              {metadata ? (
+                Object.entries(metadata).map(([key, value]) => (
+                  <div key={key} className="text-sm text-gray-600">
+                    <span className="font-medium">{key}: </span>
+                    <span>{value}</span>
+                  </div>
+                ))
+              ) : (
+                <p className="text-gray-500">No metadata available</p>
+              )}
+            </div>
+          )}
+        </div>
+      </div>
+      <a
+        href={`/api/v1/${path}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center text-blue-500 hover:text-blue-600"
+      >
+        Open in Browser
+      </a>
     </div>
   );
 };

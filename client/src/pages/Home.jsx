@@ -56,7 +56,7 @@ function Home() {
         ) : documents.length === 0 ? (
           <p>No documents found.</p>
         ) : (
-          documents.map((doc) => <Document key={doc.id} doc={doc} />)
+          documents.map((doc) => <Document key={doc._id} doc={doc} />)
         )}
       </div>
       <div className="bg-blue-600 text-white p-4 flex justify-around fixed bottom-0 w-full">
