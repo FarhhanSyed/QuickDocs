@@ -1,16 +1,25 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../context/Auth";
 import { FaUserCircle, FaUpload, FaShareSquare } from "react-icons/fa";
+import { getDocuments } from "../redux/slices/document";
+import Spinner from "../components/Spinner";
+import Document from "../components/Document";
 
 function Home() {
   const { user, logout } = useContext(AuthContext);
+  const dispatch = useDispatch();
+  const { documents, loading, error } = useSelector((state) => state.document);
+
+  useEffect(() => {
+    dispatch(getDocuments());
+  }, [dispatch]);
+
   const [dropdownOpen, setDropdownOpen] = useState(false);
 
   const toggleDropdown = () => {
     setDropdownOpen(!dropdownOpen);
   };
-
-  const documents = ["document 1", "document 2"];
 
   return (
     <div className="flex flex-col min-h-screen">
@@ -38,13 +47,17 @@ function Home() {
           )}
         </div>
       </div>
-      <ul className="flex-grow list-none p-0">
-        {documents.map((doc, index) => (
-          <li key={index} className="p-4 border-b border-gray-300">
-            {doc}
-          </li>
-        ))}
-      </ul>
+      <div className="flex-grow p-4">
+        {loading.get ? (
+          <Spinner />
+        ) : error.get ? (
+          <p className="text-red-500">{error.get}</p>
+        ) : documents.length === 0 ? (
+          <p>No documents found.</p>
+        ) : (
+          documents.map((doc) => <Document key={doc.id} doc={doc} />)
+        )}
+      </div>
       <div className="bg-blue-600 text-white p-4 flex justify-around fixed bottom-0 w-full">
         <div className="cursor-pointer flex flex-col items-center">
           <FaUpload size={24} />
