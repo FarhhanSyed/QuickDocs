@@ -12,14 +12,14 @@ export default defineConfig(({ mode }) => {
     server: {
       proxy: {
         "/api": {
-          target: "http://localhost:3000",
+          target: "http://localhost:3333",
           changeOrigin: true,
           logLevel: "debug",
         },
       },
     },
     build: {
-      outDir: `/var/www/${env.VITE_APP_DOMAIN}`, // Output directory
+      outDir: `/var/www/vasudevshetty.xyz`, // Output directory
       emptyOutDir: true,
     },
     define: {
