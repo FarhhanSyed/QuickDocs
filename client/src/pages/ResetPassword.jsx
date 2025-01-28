@@ -1,13 +1,15 @@
 import { useState, useContext } from "react";
+import { useParams } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
 import Spinner from "../components/Spinner";
 
-const ResetPassword = ({ match }) => {
+const ResetPassword = () => {
   const { resetPassword, loading, error } = useContext(AuthContext);
   const [newPassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [message, setMessage] = useState("");
   const [validationError, setValidationError] = useState("");
+  const { token } = useParams();
 
   const validateForm = () => {
     if (newPassword.length < 6) {
@@ -25,7 +27,7 @@ const ResetPassword = ({ match }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (validateForm()) {
-      await resetPassword(match.params.token, newPassword);
+      await resetPassword(token, newPassword);
       if (!error) {
         setMessage("Password reset successful");
       }
@@ -81,7 +83,11 @@ const ResetPassword = ({ match }) => {
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
             disabled={loading.resetPassword}
           >
-            {loading.resetPassword ? <Spinner size="24px" color="#fff" /> : "Reset Password"}
+            {loading.resetPassword ? (
+              <Spinner size="24px" color="#fff" />
+            ) : (
+              "Reset Password"
+            )}
           </button>
         </form>
       </div>

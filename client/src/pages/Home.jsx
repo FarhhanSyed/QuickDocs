@@ -1,21 +1,41 @@
+import { useContext, useState } from "react";
+import { AuthContext } from "../context/Auth";
+import { FaUserCircle, FaUpload, FaShareSquare } from "react-icons/fa";
+
 function Home() {
-  const documents = ["Document 1", "Document 2", "Document 3"]; // Example document list
+  const { user, logout } = useContext(AuthContext);
+  const [dropdownOpen, setDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setDropdownOpen(!dropdownOpen);
+  };
+
+  const documents = ["document 1", "document 2"];
 
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
         <h1 className="text-xl">Quick Docs</h1>
-        <div className="cursor-pointer">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            fill="white"
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z" />
-          </svg>
+        <div
+          className="relative cursor-pointer"
+          onMouseEnter={toggleDropdown}
+          onMouseLeave={toggleDropdown}
+        >
+          <FaUserCircle size={24} />
+          {dropdownOpen && (
+            <div className="absolute right-0 mt-2 w-fit bg-white text-black rounded-lg shadow-lg">
+              <div className="p-4 border-b border-gray-300">
+                <p className="font-bold">{user?.name}</p>
+                <p>{user?.email}</p>
+              </div>
+              <div
+                className="p-4 cursor-pointer hover:bg-gray-200"
+                onClick={logout}
+              >
+                Logout
+              </div>
+            </div>
+          )}
         </div>
       </div>
       <ul className="flex-grow list-none p-0">
@@ -27,29 +47,11 @@ function Home() {
       </ul>
       <div className="bg-blue-600 text-white p-4 flex justify-around fixed bottom-0 w-full">
         <div className="cursor-pointer flex flex-col items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            fill="white"
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
-          </svg>
+          <FaUpload size={24} />
           <p className="m-0">Upload</p>
         </div>
         <div className="cursor-pointer flex flex-col items-center">
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            height="24"
-            viewBox="0 0 24 24"
-            width="24"
-            fill="white"
-          >
-            <path d="M0 0h24v24H0z" fill="none" />
-            <path d="M15 9H9v6h6V9zm4-6H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V5h14v14z" />
-          </svg>
+          <FaShareSquare size={24} />
           <p className="m-0">Share</p>
         </div>
       </div>
