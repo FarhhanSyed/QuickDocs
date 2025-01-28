@@ -6,7 +6,7 @@ import Spinner from "./Spinner";
 export default function PrivateRoute({ element }) {
   const { user, loading } = useContext(AuthContext);
 
-  if (loading) {
+  if (loading.user) {
     return <Spinner />;
   }
 

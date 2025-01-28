@@ -12,7 +12,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 function App() {
   const { loading } = useContext(AuthContext);
 
-  if (loading) {
+  if (loading.user) {
     return <Spinner />;
   }
 

@@ -1,6 +1,7 @@
 import { useState, useContext } from "react";
 import { Link } from "react-router-dom";
 import { AuthContext } from "../context/Auth";
+import Spinner from "../components/Spinner";
 
 const Signup = () => {
   const { signup, loading, error } = useContext(AuthContext);
@@ -45,7 +46,7 @@ const Signup = () => {
     <div className="min-h-screen flex items-center justify-center bg-gray-100">
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Signup</h2>
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {error.signup && <p className="text-red-500 mb-4">{error.signup}</p>}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2" htmlFor="name">
@@ -117,9 +118,9 @@ const Signup = () => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-            disabled={loading}
+            disabled={loading.signup}
           >
-            {loading ? "Signing up..." : "Signup"}
+            {loading.signup ? <Spinner size="24px" color="#fff" /> : "Signup"}
           </button>
         </form>
         <p className="mt-4 text-center">

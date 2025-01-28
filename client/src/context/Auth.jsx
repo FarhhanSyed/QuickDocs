@@ -1,22 +1,40 @@
-import React, { createContext, useState, useEffect } from "react";
+import { useState, useEffect, createContext } from "react";
 import axios from "axios";
 
-const AuthContext = createContext();
+// eslint-disable-next-line
+export const AuthContext = createContext();
 
-const AuthProvider = ({ children }) => {
+export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(null);
+  const [loading, setLoading] = useState({
+    user: true,
+    signup: false,
+    login: false,
+    logout: false,
+    forgotPassword: false,
+    resetPassword: false,
+  });
+  const [error, setError] = useState({
+    user: null,
+    signup: null,
+    login: null,
+    logout: null,
+    forgotPassword: null,
+    resetPassword: null,
+  });
 
   useEffect(() => {
     const checkUserLoggedIn = async () => {
       try {
-        const res = await axios.get("/api/v1/auth/me");
+        const res = await axios.get("/api/v1/auth/me", {
+          withCredentials: true,
+        });
         setUser(res.data.user);
       } catch (err) {
         setUser(null);
+        setError((prev) => ({ ...prev, user: err.response.data.message }));
       } finally {
-        setLoading(false);
+        setLoading((prev) => ({ ...prev, user: false }));
       }
     };
 
@@ -24,7 +42,7 @@ const AuthProvider = ({ children }) => {
   }, []);
 
   const signup = async (name, email, password) => {
-    setLoading(true);
+    setLoading((prev) => ({ ...prev, signup: true }));
     try {
       const res = await axios.post("/api/v1/auth/signup", {
         name,
@@ -33,55 +51,61 @@ const AuthProvider = ({ children }) => {
       });
       setUser(res.data.user);
     } catch (err) {
-      setError(err.response.data.message);
+      setError((prev) => ({ ...prev, signup: err.response.data.message }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, signup: false }));
     }
   };
 
   const login = async (email, password) => {
-    setLoading(true);
+    setLoading((prev) => ({ ...prev, login: true }));
     try {
       const res = await axios.post("/api/v1/auth/login", { email, password });
       setUser(res.data.user);
     } catch (err) {
-      setError(err.response.data.message);
+      setError((prev) => ({ ...prev, login: err.response.data.message }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, login: false }));
     }
   };
 
   const logout = async () => {
-    setLoading(true);
+    setLoading((prev) => ({ ...prev, logout: true }));
     try {
       await axios.post("/api/v1/auth/logout");
       setUser(null);
     } catch (err) {
-      setError(err.response.data.message);
+      setError((prev) => ({ ...prev, logout: err.response.data.message }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, logout: false }));
     }
   };
 
-  const requestPasswordReset = async (email) => {
-    setLoading(true);
+  const forgotPassword = async (email) => {
+    setLoading((prev) => ({ ...prev, forgotPassword: true }));
     try {
       await axios.post("/api/v1/auth/request-password-reset", { email });
     } catch (err) {
-      setError(err.response.data.message);
+      setError((prev) => ({
+        ...prev,
+        forgotPassword: err.response.data.message,
+      }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, forgotPassword: false }));
     }
   };
 
   const resetPassword = async (token, newPassword) => {
-    setLoading(true);
+    setLoading((prev) => ({ ...prev, resetPassword: true }));
     try {
       await axios.post(`/api/v1/auth/reset-password/${token}`, { newPassword });
     } catch (err) {
-      setError(err.response.data.message);
+      setError((prev) => ({
+        ...prev,
+        resetPassword: err.response.data.message,
+      }));
     } finally {
-      setLoading(false);
+      setLoading((prev) => ({ ...prev, resetPassword: false }));
     }
   };
 
@@ -94,13 +118,11 @@ const AuthProvider = ({ children }) => {
         signup,
         login,
         logout,
-        requestPasswordReset,
+        forgotPassword,
         resetPassword,
       }}
     >
       {children}
     </AuthContext.Provider>
   );
-};
-
-export { AuthProvider, AuthContext };
+}

@@ -1,5 +1,6 @@
 import { useState, useContext } from "react";
 import { AuthContext } from "../context/Auth";
+import Spinner from "../components/Spinner";
 
 const ResetPassword = ({ match }) => {
   const { resetPassword, loading, error } = useContext(AuthContext);
@@ -36,7 +37,9 @@ const ResetPassword = ({ match }) => {
       <div className="max-w-md w-full bg-white p-8 rounded-lg shadow-md">
         <h2 className="text-2xl font-bold mb-6 text-center">Reset Password</h2>
         {message && <p className="text-green-500 mb-4">{message}</p>}
-        {error && <p className="text-red-500 mb-4">{error}</p>}
+        {error.resetPassword && (
+          <p className="text-red-500 mb-4">{error.resetPassword}</p>
+        )}
         <form onSubmit={handleSubmit}>
           <div className="mb-4">
             <label className="block text-gray-700 mb-2" htmlFor="newPassword">
@@ -76,9 +79,9 @@ const ResetPassword = ({ match }) => {
           <button
             type="submit"
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
-            disabled={loading}
+            disabled={loading.resetPassword}
           >
-            {loading ? "Resetting..." : "Reset Password"}
+            {loading.resetPassword ? <Spinner size="24px" color="#fff" /> : "Reset Password"}
           </button>
         </form>
       </div>

@@ -7,6 +7,7 @@ const morgan = require("morgan");
 const authRoutes = require("./routes/auth");
 const userRoutes = require("./routes/user");
 const documentRoutes = require("./routes/document");
+const cookieParser = require("cookie-parser");
 dotenv.config();
 
 const app = express();
@@ -34,6 +35,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 // Middleware
+app.use(cookieParser());
 app.use(express.json());
 
 // Morgan logging (for dev and prod environments)

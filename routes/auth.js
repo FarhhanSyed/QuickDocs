@@ -1,5 +1,6 @@
 const express = require("express");
 const authController = require("../controllers/auth");
+const authenticateUser = require("../middlewares/auth");
 
 const router = express.Router();
 
@@ -18,4 +19,7 @@ router.post("/request-password-reset", authController.requestPasswordReset);
 // Reset password route
 router.post("/reset-password/:token", authController.resetPassword);
 
+router.get("/me", authenticateUser, (req, res) => {
+  res.status(200).json({ message: "Authenticated", user: req.user });
+});
 module.exports = router;
