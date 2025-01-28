@@ -28,8 +28,7 @@ function Home() {
         <h1 className="text-xl">Quick Docs</h1>
         <div
           className="relative cursor-pointer"
-          onMouseEnter={toggleDropdown}
-          onMouseLeave={toggleDropdown}
+          onClick={toggleDropdown} // Toggle on click instead of hover
         >
           <FaUserCircle size={24} />
           {dropdownOpen && (
