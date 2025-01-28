@@ -33,7 +33,7 @@ function Home() {
         >
           <FaUserCircle size={24} />
           {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-fit bg-white text-black rounded-lg shadow-lg">
+            <div className="absolute right-0 mt-2 w-fit bg-white text-black rounded-lg shadow-lg z-10">
               <div className="p-4 border-b border-gray-300">
                 <p className="font-bold">{user?.name}</p>
                 <p>{user?.email}</p>

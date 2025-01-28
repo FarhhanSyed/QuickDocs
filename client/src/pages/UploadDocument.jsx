@@ -11,9 +11,34 @@ function UploadDocument() {
   const [name, setName] = useState("");
   const [file, setFile] = useState(null);
   const [metadata, setMetadata] = useState({});
+  const [isDragging, setIsDragging] = useState(false);
 
   const handleFileChange = (e) => {
     const selectedFile = e.target.files[0];
+    if (selectedFile) {
+      setFile(selectedFile);
+      setMetadata({
+        type: selectedFile.type,
+        size: selectedFile.size, // Size in bytes
+        lastModified: selectedFile.lastModified, // Timestamp
+        name: selectedFile.name, // Original file name
+      });
+    }
+  };
+
+  const handleDragOver = (e) => {
+    e.preventDefault();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = () => {
+    setIsDragging(false);
+  };
+
+  const handleDrop = (e) => {
+    e.preventDefault();
+    setIsDragging(false);
+    const selectedFile = e.dataTransfer.files[0];
     if (selectedFile) {
       setFile(selectedFile);
       setMetadata({
@@ -60,18 +85,32 @@ function UploadDocument() {
               required
             />
           </div>
-          <div className="mb-4">
-            <label className="block text-gray-700 mb-2" htmlFor="file">
-              Upload File
-            </label>
-            <input
-              type="file"
-              id="file"
-              className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
-              onChange={handleFileChange}
-              required
-            />
-          </div>
+          {!file && (
+            <div
+              className={`mb-4 border-2 border-dashed rounded-lg p-4 text-center ${
+                isDragging ? "border-blue-500 bg-blue-100" : "border-gray-300"
+              }`}
+              onDragOver={handleDragOver}
+              onDragLeave={handleDragLeave}
+              onDrop={handleDrop}
+            >
+              <label className="block text-gray-700 mb-2" htmlFor="file">
+                Upload File
+              </label>
+              <input
+                type="file"
+                id="file"
+                className="hidden"
+                onChange={handleFileChange}
+                required
+              />
+              <p className="text-gray-600">
+                {isDragging
+                  ? "Drop the file here..."
+                  : "Drag and drop a file here, or click to select a file"}
+              </p>
+            </div>
+          )}
           <div className="mb-4">
             <h3 className="text-gray-700 font-semibold">File Metadata</h3>
             {file && (

@@ -16,7 +16,7 @@ const Document = ({ doc }) => {
   const { name, path, createdAt, metadata } = doc;
 
   return (
-    <div className="w-full p-4 bg-white shadow-md rounded-lg relative">
+    <div className="w-full p-4 bg-white shadow-md rounded-lg relative mb-4">
       <div className="flex justify-between items-center mb-6">
         <div className="flex items-center space-x-4">
           <FaFilePdf className="text-red-500" size={24} />
