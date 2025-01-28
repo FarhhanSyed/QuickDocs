@@ -1,7 +1,12 @@
-import { useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { AuthContext } from "../context/Auth";
-import { FaUserCircle, FaUpload, FaShareSquare } from "react-icons/fa";
+import {
+  FaUserCircle,
+  FaUpload,
+  FaShareSquare,
+  FaSignOutAlt,
+} from "react-icons/fa";
 import { getDocuments } from "../redux/slices/document";
 import Spinner from "../components/Spinner";
 import Document from "../components/Document";
@@ -16,35 +21,23 @@ function Home() {
     dispatch(getDocuments());
   }, [dispatch]);
 
-  const [dropdownOpen, setDropdownOpen] = useState(false);
-
-  const toggleDropdown = () => {
-    setDropdownOpen(!dropdownOpen);
-  };
-
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
         <h1 className="text-xl">Quick Docs</h1>
-        <div
-          className="relative cursor-pointer"
-          onClick={toggleDropdown} // Toggle on click instead of hover
-        >
-          <FaUserCircle size={24} />
-          {dropdownOpen && (
-            <div className="absolute right-0 mt-2 w-fit bg-white text-black rounded-lg shadow-lg z-10">
+        <div className="relative flex items-center space-x-4">
+          <Link to="/profile" className="relative cursor-pointer group">
+            <FaUserCircle size={24} />
+            <div className="absolute right-0 mt-2 w-fit bg-white text-black rounded-lg shadow-lg z-10 hidden group-hover:block">
               <div className="p-4 border-b border-gray-300">
                 <p className="font-bold">{user?.name}</p>
                 <p>{user?.email}</p>
               </div>
-              <div
-                className="p-4 cursor-pointer hover:bg-gray-200"
-                onClick={logout}
-              >
-                Logout
-              </div>
             </div>
-          )}
+          </Link>
+          <div className="cursor-pointer" onClick={logout}>
+            <FaSignOutAlt size={24} />
+          </div>
         </div>
       </div>
       <div className="flex-grow p-4">

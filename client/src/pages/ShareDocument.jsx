@@ -55,7 +55,9 @@ function ShareDocument() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-blue-600 text-white p-4 flex justify-between items-center">
-        <h1 className="text-xl">Quick Docs</h1>
+        <h1 className="text-xl cursor-pointer" onClick={handleBack}>
+          Quick Docs
+        </h1>
       </div>
       <div className="p-4 flex-grow">
         <h2 className="text-xl mb-4">Share Document</h2>

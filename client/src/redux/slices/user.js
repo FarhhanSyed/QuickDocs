@@ -14,7 +14,7 @@ export const updateProfile = createAsyncThunk(
       });
       return response.data.user;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );
@@ -29,7 +29,7 @@ export const updatePassword = createAsyncThunk(
       });
       return response.data.message;
     } catch (error) {
-      return rejectWithValue(error.response.data);
+      return rejectWithValue(error.response.data.message);
     }
   }
 );

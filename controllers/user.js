@@ -18,7 +18,7 @@ const upload = multer({ storage });
 exports.updateProfile = [
   upload.single("profileImage"), // Handling profile image upload
   async (req, res) => {
-    const userId = req.user.id;
+    const userId = req.user._id;
     const { name } = req.body;
     let profileImage = req.file ? req.file.path : null; // Use the uploaded file's path if present
 
@@ -43,7 +43,7 @@ exports.updateProfile = [
 
 // Controller: Update Password
 exports.updatePassword = async (req, res) => {
-  const userId = req.user.id;
+  const userId = req.user._id;
   const { currentPassword, newPassword } = req.body;
 
   try {

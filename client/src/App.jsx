@@ -13,6 +13,7 @@ import ForgotPassword from "./pages/ForgotPassword.jsx";
 import NotFound from "./components/NotFound.jsx";
 import UploadDocument from "./pages/UploadDocument";
 import ShareDocument from "./pages/ShareDocument";
+import Profile from "./pages/Profile.jsx";
 
 function App() {
   const { loading } = useContext(AuthContext);
@@ -41,6 +42,10 @@ function App() {
         <Route
           path="/upload-document"
           element={<PrivateRoute element={<UploadDocument />} />}
+        />
+        <Route
+          path="/profile"
+          element={<PrivateRoute element={<Profile />} />}
         />
         <Route
           path="/share-document"
