@@ -2,7 +2,7 @@ import { useState } from "react";
 import { FaFilePdf } from "react-icons/fa";
 
 const Document = ({ doc }) => {
-  const [isMetadataVisible, setIsMetadataVisible] = useState(true);
+  const [isMetadataVisible, setIsMetadataVisible] = useState(false);
 
   if (!doc) {
     return (
