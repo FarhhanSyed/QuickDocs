@@ -8,6 +8,7 @@ import { useNavigate } from "react-router-dom";
 
 function Profile() {
   const { user, setUser, logout } = useContext(AuthContext);
+  console.log(user);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { loading, error } = useSelector((state) => state.user);
@@ -129,7 +130,7 @@ function Profile() {
                     />
                   ) : user?.profileImage ? (
                     <img
-                      src={`/api/v1/${user.profileImage}`}
+                      src={`/api/v1/${user?.profileImage}`}
                       alt="Profile"
                       className="w-24 h-24 rounded-full mx-auto border-2 border-blue-600"
                     />

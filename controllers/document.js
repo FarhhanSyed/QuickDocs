@@ -1,7 +1,7 @@
 const multer = require("multer");
 const path = require("path");
 const Document = require("../models/document");
-const User = require("../models/User");
+const User = require("../models/user");
 
 // Multer setup for file storage
 const storage = multer.diskStorage({

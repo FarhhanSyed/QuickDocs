@@ -1,4 +1,4 @@
-const User = require("../models/User");
+const User = require("../models/user");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const nodemailer = require("nodemailer");
@@ -45,7 +45,7 @@ exports.signup = async (req, res) => {
 
     res.status(201).json({
       message: "User registered successfully",
-      user: { id: user._id, name: user.name, email: user.email },
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
@@ -72,7 +72,7 @@ exports.login = async (req, res) => {
 
     res.status(200).json({
       message: "Login successful",
-      user: { id: user._id, name: user.name, email: user.email },
+      user,
     });
   } catch (error) {
     res.status(500).json({ message: "Server error", error: error.message });
