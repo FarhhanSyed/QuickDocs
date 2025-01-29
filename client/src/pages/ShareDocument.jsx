@@ -1,7 +1,10 @@
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { getDocuments } from "../redux/slices/document"; // Adjust the import path as necessary
+import {
+  getDocuments,
+  generateShareTokenForMultipleDocuments,
+} from "../redux/slices/document"; // Adjust the import path as necessary
 import Spinner from "../components/Spinner";
 
 function ShareDocument() {
@@ -11,6 +14,7 @@ function ShareDocument() {
   const [selectedDocuments, setSelectedDocuments] = useState([]);
   const [accessType, setAccessType] = useState("");
   const [validationError, setValidationError] = useState("");
+  const [pin, setPin] = useState("");
 
   useEffect(() => {
     dispatch(getDocuments());
@@ -37,14 +41,20 @@ function ShareDocument() {
     return true;
   };
 
-  const handleShare = () => {
+  const handleShare = async () => {
     if (validateForm()) {
-      console.log(
-        `Sharing documents ${selectedDocuments.join(
-          ", "
-        )} with ${accessType} access`
-      );
-      // Implement the logic to send the request to the backend
+      try {
+        const response = await dispatch(
+          generateShareTokenForMultipleDocuments({
+            documentIds: selectedDocuments,
+            accessMode: accessType,
+            pin,
+          })
+        ).unwrap();
+        navigate("/qr-code", { state: { token: response.token } });
+      } catch (err) {
+        console.error("Failed to generate share token:", err);
+      }
     }
   };
 
@@ -59,7 +69,7 @@ function ShareDocument() {
           Quick Docs
         </h1>
       </div>
-      <div className="p-4 flex-grow">
+      <div className="p-4 flex-grow flex flex-col items-center">
         <h2 className="text-xl mb-4">Share Document</h2>
         {loading.get ? (
           <Spinner />
@@ -68,7 +78,7 @@ function ShareDocument() {
         ) : documents.length === 0 ? (
           <p>No documents found.</p>
         ) : (
-          <div>
+          <div className="w-full max-w-md">
             <div className="mb-4">
               <label className="block text-gray-700 mb-2" htmlFor="accessType">
                 Select Access Type
@@ -112,21 +122,34 @@ function ShareDocument() {
                 <p className="text-red-500 mt-2">{validationError}</p>
               )}
             </div>
+            <div className="mb-4">
+              <label className="block text-gray-700 mb-2" htmlFor="pin">
+                Enter PIN (optional)
+              </label>
+              <input
+                type="text"
+                id="pin"
+                className="w-full px-3 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                value={pin}
+                onChange={(e) => setPin(e.target.value)}
+              />
+            </div>
           </div>
         )}
       </div>
-      <div className="p-4 flex justify-between">
+      <div className="p-4 flex justify-center space-x-4">
         <button
           onClick={handleBack}
-          className="bg-gray-400 text-white py-2 px-4 rounded-lg hover:bg-gray-600 transition duration-200"
+          className="bg-gray-400 text-white py-2 px-6 rounded-lg hover:bg-gray-600 transition duration-200"
         >
           Back
         </button>
         <button
           onClick={handleShare}
-          className="bg-blue-500 text-white py-2 px-4 rounded-lg hover:bg-blue-600 transition duration-200"
+          className="bg-blue-500 text-white py-2 px-6 rounded-lg hover:bg-blue-600 transition duration-200 disabled:bg-gray-400 disabled:cursor-not-allowed"
+          disabled={loading.share}
         >
-          Share
+          {loading.share ? <Spinner /> : "Share"}
         </button>
       </div>
     </div>

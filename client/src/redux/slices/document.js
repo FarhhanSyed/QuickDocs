@@ -34,6 +34,44 @@ export const getDocuments = createAsyncThunk(
   }
 );
 
+// Thunk to validate access to shared documents
+export const validateAccess = createAsyncThunk(
+  "document/validateAccess",
+  async ({ token, pin }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "/api/v1/documents/validate-access",
+        { token, pin },
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data.documents;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
+// Thunk to generate share token for multiple documents
+export const generateShareTokenForMultipleDocuments = createAsyncThunk(
+  "document/generateShareTokenForMultipleDocuments",
+  async ({ documentIds, accessMode, pin }, { rejectWithValue }) => {
+    try {
+      const response = await axios.post(
+        "/api/v1/documents/generate-share-token",
+        { documentIds, accessMode, pin },
+        {
+          withCredentials: true,
+        }
+      );
+      return response.data;
+    } catch (error) {
+      return rejectWithValue(error.response.data);
+    }
+  }
+);
+
 const documentSlice = createSlice({
   name: "document",
   initialState: {
@@ -41,10 +79,14 @@ const documentSlice = createSlice({
     loading: {
       create: false,
       get: false,
+      validateAccess: false,
+      generateShareToken: false,
     },
     error: {
       create: null,
       get: null,
+      validateAccess: null,
+      generateShareToken: null,
     },
   },
   reducers: {},
@@ -73,7 +115,33 @@ const documentSlice = createSlice({
       .addCase(getDocuments.rejected, (state, action) => {
         state.loading.get = false;
         state.error.get = action.payload;
-      });
+      })
+      .addCase(validateAccess.pending, (state) => {
+        state.loading.validateAccess = true;
+        state.error.validateAccess = null;
+      })
+      .addCase(validateAccess.fulfilled, (state, action) => {
+        state.loading.validateAccess = false;
+        state.documents = action.payload;
+      })
+      .addCase(validateAccess.rejected, (state, action) => {
+        state.loading.validateAccess = false;
+        state.error.validateAccess = action.payload;
+      })
+      .addCase(generateShareTokenForMultipleDocuments.pending, (state) => {
+        state.loading.generateShareToken = true;
+        state.error.generateShareToken = null;
+      })
+      .addCase(generateShareTokenForMultipleDocuments.fulfilled, (state) => {
+        state.loading.generateShareToken = false;
+      })
+      .addCase(
+        generateShareTokenForMultipleDocuments.rejected,
+        (state, action) => {
+          state.loading.generateShareToken = false;
+          state.error.generateShareToken = action.payload;
+        }
+      );
   },
 });
 

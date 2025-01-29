@@ -14,6 +14,9 @@ import NotFound from "./components/NotFound.jsx";
 import UploadDocument from "./pages/UploadDocument";
 import ShareDocument from "./pages/ShareDocument";
 import Profile from "./pages/Profile.jsx";
+import ValidateAccess from "./pages/ValidateAccess.jsx";
+import GeneratedQRCode from "./pages/GeneratedQRCode.jsx";
+import ScanQRCode from "./pages/ScanQRCode.jsx";
 
 function App() {
   const { loading } = useContext(AuthContext);
@@ -50,6 +53,18 @@ function App() {
         <Route
           path="/share-document"
           element={<PrivateRoute element={<ShareDocument />} />}
+        />
+        <Route
+          path="/scan-qr-code"
+          element={<PrivateRoute element={<ScanQRCode />} />}
+        />
+        <Route
+          path="/shared-documents/:token"
+          element={<PublicRoute element={<ValidateAccess />} />}
+        />
+        <Route
+          path="/qr-code"
+          element={<PrivateRoute element={<GeneratedQRCode />} />}
         />
         {/* 404 Not Found Route */}
         <Route path="*" element={<NotFound />} />

@@ -5,6 +5,7 @@ import {
   FaUserCircle,
   FaUpload,
   FaShareSquare,
+  FaQrcode,
   FaSignOutAlt,
 } from "react-icons/fa";
 import { getDocuments } from "../redux/slices/document";
@@ -65,6 +66,13 @@ function Home() {
         >
           <FaShareSquare size={24} />
           <p className="m-0">Share</p>
+        </Link>
+        <Link
+          to="/scan-qr-code"
+          className="cursor-pointer flex flex-col items-center"
+        >
+          <FaQrcode size={24} />
+          <p className="m-0">Access</p>
         </Link>
       </div>
     </div>

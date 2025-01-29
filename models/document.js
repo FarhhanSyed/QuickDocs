@@ -27,6 +27,20 @@ const documentSchema = new mongoose.Schema(
       type: Date,
       default: Date.now,
     },
+    shareToken: String,
+    shareTokenExpiry: Date,
+    pin: String,
+    accessMode: {
+      type: String,
+      enum: ['read-only', 'print-only'],
+      default: 'read-only'
+    },
+    accessLogs: [{
+      user: String,
+      ipAddress: String,
+      accessTime: Date,
+      accessMode: String
+    }]
   },
   {
     timestamps: true, // Automatically adds createdAt and updatedAt fields
