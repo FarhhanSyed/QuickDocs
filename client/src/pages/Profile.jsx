@@ -100,7 +100,7 @@ function Profile() {
           className="cursor-pointer text-xl font-semibold"
           onClick={() => navigate(-1)}
         >
-          Quick Docs
+          Vault Docs
         </h1>
         <div className="relative flex items-center space-x-4">
           <div className="cursor-pointer" onClick={logout}>

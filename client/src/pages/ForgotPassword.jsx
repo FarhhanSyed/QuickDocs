@@ -4,7 +4,7 @@ import { AuthContext } from "../context/Auth";
 import Spinner from "../components/Spinner";
 
 const ForgotPassword = () => {
-  const { requestPasswordReset, loading, error } = useContext(AuthContext);
+  const { forgotPassword, loading, error } = useContext(AuthContext);
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
   const [validationError, setValidationError] = useState("");
@@ -23,7 +23,7 @@ const ForgotPassword = () => {
     e.preventDefault();
     if (validateForm()) {
       try {
-        await requestPasswordReset(email);
+        await forgotPassword(email);
         setMessage("Password reset link has been sent to your email.");
         setValidationError("");
       } catch (err) {
@@ -63,7 +63,11 @@ const ForgotPassword = () => {
             className="w-full bg-blue-500 text-white py-2 rounded-lg hover:bg-blue-600 transition duration-200"
             disabled={loading.forgotPassword}
           >
-            {loading.forgotPassword ? <Spinner size="24px" color="#fff" /> : "Send Reset Link"}
+            {loading.forgotPassword ? (
+              <Spinner size="24px" color="#fff" />
+            ) : (
+              "Send Reset Link"
+            )}
           </button>
         </form>
         {message && <p className="text-green-500 mt-4">{message}</p>}

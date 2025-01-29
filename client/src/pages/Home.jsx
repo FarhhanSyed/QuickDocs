@@ -25,7 +25,7 @@ function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <div className="bg-blue-600 text-white p-4 flex justify-between items-center sticky top-0 z-50">
-        <h1 className="text-xl">Quick Docs</h1>
+        <h1 className="text-xl">Vault Docs</h1>
         <div className="relative flex items-center space-x-4">
           <Link to="/profile" className="relative cursor-pointer group">
             <FaUserCircle size={24} />
