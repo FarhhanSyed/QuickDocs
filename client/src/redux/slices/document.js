@@ -46,7 +46,7 @@ export const validateAccess = createAsyncThunk(
           withCredentials: true,
         }
       );
-      return response.data.documents;
+      return response.data.documents; // Assuming response returns shared documents
     } catch (error) {
       return rejectWithValue(error.response.data);
     }
@@ -76,6 +76,7 @@ const documentSlice = createSlice({
   name: "document",
   initialState: {
     documents: [],
+    sharedDocuments: [], // New state for shared documents
     loading: {
       create: false,
       get: false,
@@ -122,7 +123,8 @@ const documentSlice = createSlice({
       })
       .addCase(validateAccess.fulfilled, (state, action) => {
         state.loading.validateAccess = false;
-        state.documents = action.payload;
+        // Append shared documents to the existing sharedDocuments state
+        state.sharedDocuments = [...state.sharedDocuments, ...action.payload];
       })
       .addCase(validateAccess.rejected, (state, action) => {
         state.loading.validateAccess = false;

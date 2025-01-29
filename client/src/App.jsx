@@ -58,10 +58,7 @@ function App() {
           path="/scan-qr-code"
           element={<PrivateRoute element={<ScanQRCode />} />}
         />
-        <Route
-          path="/shared-documents/:token"
-          element={<PublicRoute element={<ValidateAccess />} />}
-        />
+        <Route path="/shared-documents/:token" element={<ValidateAccess />} />
         <Route
           path="/qr-code"
           element={<PrivateRoute element={<GeneratedQRCode />} />}

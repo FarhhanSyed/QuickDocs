@@ -70,6 +70,7 @@ exports.validateAccess = async (req, res) => {
     res.json({
       documents: documents.map((document) => ({
         _id: document._id,
+        doc: document,
         name: document.name,
         accessMode: document.accessMode,
         path: document.path,
